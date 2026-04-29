@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>淀山湖校区运营与活动大事年表</title>
+<style>
+  :root {
+    --ops-bg: #EEF2FF; --ops-border: #818CF8; --ops-text: #3730A3;
+    --act-bg: #FEF3C7; --act-border: #F59E0B; --act-text: #92400E;
+    --cmp-bg: #ECFDF5; --cmp-border: #10B981; --cmp-text: #065F46;
+    --fac-bg: #FEE2E2; --fac-border: #EF4444; --fac-text: #991B1B;
+    --sys-bg: #F3E8FF; --sys-border: #A78BFA; --sys-text: #5B21B6;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; background:#F8FAFC; color:#1E293B; line-height:1.5; }
+  
+  .container { max-width:1400px; margin:0 auto; padding:24px; }
+
+  /* Header */
+  .header { text-align:center; padding:32px 0 16px; border-bottom:3px solid #E2E8F0; margin-bottom:32px; }
+  .header h1 { font-size:28px; font-weight:800; color:#0F172A; letter-spacing:-0.5px; }
+  .header .sub { font-size:14px; color:#64748B; margin-top:8px; }
+
+  /* Legend */
+  .legend { display:flex; flex-wrap:wrap; gap:16px; justify-content:center; margin-bottom:24px; }
+  .legend-item { display:flex; align-items:center; gap:6px; font-size:13px; font-weight:600; }
+  .legend-dot { width:14px; height:14px; border-radius:4px; border:2px solid; }
+
+  /* Category Nav */
+  .cat-nav { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-bottom:28px; position:sticky; top:0; background:#F8FAFC; padding:12px 0; z-index:100; border-bottom:1px solid #E2E8F0; }
+  .cat-btn { padding:8px 18px; border-radius:20px; border:2px solid #CBD5E1; background:white; cursor:pointer; font-size:14px; font-weight:600; color:#475569; transition:all .2s; }
+  .cat-btn:hover { border-color:#94A3B8; }
+  .cat-btn.active { color:white; border-color:transparent; }
+  .cat-btn.active[data-cat="all"] { background:#334155; }
+  .cat-btn.active[data-cat="ops"] { background:#4F46E5; }
+  .cat-btn.active[data-cat="act"] { background:#D97706; }
+  .cat-btn.active[data-cat="cmp"] { background:#059669; }
+  .cat-btn.active[data-cat="fac"] { background:#DC2626; }
+  .cat-btn.active[data-cat="sys"] { background:#7C3AED; }
+
+  /* Month Section */
+  .month-section { margin-bottom:36px; }
+  .month-header { 
+    font-size:20px; font-weight:800; color:#0F172A; 
+    padding:10px 0 6px; margin-bottom:12px;
+    border-bottom:2px solid #CBD5E1;
+    display:flex; align-items:center; gap:10px;
+  }
+  .month-header .badge { font-size:12px; font-weight:600; padding:2px 10px; border-radius:12px; background:#E2E8F0; color:#475569; }
+
+  /* Calendar Grid */
+  .cal-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(42px, 1fr)); gap:3px; margin-bottom:6px; }
+  .day-header { font-size:11px; font-weight:700; text-align:center; color:#94A3B8; padding:4px 0; }
+  .day-cell {
+    min-height:42px; border-radius:6px; border:1.5px solid #E2E8F0; background:white;
+    padding:3px; font-size:11px; position:relative; transition:all .2s; cursor:default;
+  }
+  .day-cell.has-event { border-width:2px; }
+  .day-cell:hover { transform:scale(1.05); z-index:10; box-shadow:0 4px 12px rgba(0,0,0,.1); }
+  .day-num { font-weight:700; font-size:11px; color:#475569; margin-bottom:1px; }
+  .day-cell.weekend .day-num { color:#EF4444; }
+  .day-cell.today { background:#F0F9FF; border-color:#0EA5E9; }
+  .evt-tag { 
+    display:inline-block; font-size:8.5px; padding:1px 3px; border-radius:3px; 
+    margin-top:1px; line-height:1.3; color:white; font-weight:600; max-width:100%;
+    overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+  }
+  .day-cell.cat-ops { border-color:var(--ops-border); }
+  .day-cell.cat-act { border-color:var(--act-border); }
+  .day-cell.cat-cmp { border-color:var(--cmp-border); }
+  .day-cell.cat-fac { border-color:var(--fac-border); }
+  .day-cell.cat-sys { border-color:var(--sys-border); }
+  .evt-ops { background:var(--ops-border); }
+  .evt-act { background:var(--act-border); }
+  .evt-cmp { background:var(--cmp-border); }
+  .evt-fac { background:var(--fac-border); }
+  .evt-sys { background:var(--sys-border); }
+  .multi-cat .evt-tag { display:block; margin-top:1px; }
+
+  /* Detail Cards */
+  .detail-section { margin-top:8px; }
+  .detail-cards { display:flex; flex-wrap:wrap; gap:8px; }
+  .detail-card {
+    flex:1 1 280px; border-radius:8px; padding:12px 14px;
+    border-left:4px solid; font-size:13px;
+  }
+  .detail-card .dc-date { font-weight:700; font-size:12px; margin-bottom:4px; }
+  .detail-card .dc-text { color:#334155; }
+  .detail-card .dc-note { color:#64748B; font-size:12px; margin-top:4px; font-style:italic; }
+  .dc-ops { background:var(--ops-bg); border-color:var(--ops-border); }
+  .dc-act { background:var(--act-bg); border-color:var(--act-border); }
+  .dc-cmp { background:var(--cmp-bg); border-color:var(--cmp-border); }
+  .dc-fac { background:var(--fac-bg); border-color:var(--fac-border); }
+  .dc-sys { background:var(--sys-bg); border-color:var(--sys-border); }
+
+  /* Timeline view for multi-day items */
+  .range-item { 
+    background:white; border:1.5px solid #E2E8F0; border-radius:8px; 
+    padding:10px 14px; margin-bottom:8px; display:flex; gap:12px; align-items:center;
+  }
+  .range-date { font-weight:800; font-size:13px; color:#0F172A; min-width:90px; }
+  .range-body { flex:1; }
+  .range-body .rb-title { font-weight:700; font-size:13px; }
+  .range-body .rb-note { font-size:12px; color:#64748B; }
+  .range-tag { font-size:11px; padding:3px 10px; border-radius:12px; font-weight:600; color:white; }
+
+  /* System timeline */
+  .sys-timeline { position:relative; padding-left:28px; }
+  .sys-timeline::before { content:''; position:absolute; left:8px; top:0; bottom:0; width:3px; background:#DDD6FE; border-radius:2px; }
+  .sys-item { position:relative; margin-bottom:14px; }
+  .sys-item::before { content:''; position:absolute; left:-24px; top:6px; width:12px; height:12px; border-radius:50%; background:#7C3AED; border:2px solid white; }
+  .sys-item .si-time { font-size:12px; font-weight:700; color:#7C3AED; }
+  .sys-item .si-title { font-size:14px; font-weight:700; color:#1E293B; }
+  .sys-item .si-desc { font-size:13px; color:#475569; margin-top:2px; }
+
+  .empty-cell { background:#F8FAFC; }
+
+  @media (max-width:768px) {
+    .cal-grid { grid-template-columns:repeat(7, 1fr); }
+    .day-cell { min-height:36px; font-size:9px; }
+    .evt-tag { font-size:7px; }
+    .detail-card { flex:1 1 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+  <h1>📅 淀山湖校区运营与活动大事年表</h1>
+  <div class="sub">时间范围：2025年11月 — 2026年5月 ｜ 基于「淀山湖院长群」聊天记录整理</div>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:var(--ops-bg);border-color:var(--ops-border)"></div>🏫 学校运营制度</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--act-bg);border-color:var(--act-border)"></div>🎉 校园活动</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--cmp-bg);border-color:var(--cmp-border)"></div>🏆 竞赛安排</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--fac-bg);border-color:var(--fac-border)"></div>🔧 后勤保障</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--sys-bg);border-color:var(--sys-border)"></div>📋 运营制度时间线</div>
+</div>
+
+<div class="cat-nav" id="catNav">
+  <button class="cat-btn active" data-cat="all" onclick="filterCat('all')">全部</button>
+  <button class="cat-btn" data-cat="ops" onclick="filterCat('ops')">🏫 运营制度</button>
+  <button class="cat-btn" data-cat="act" onclick="filterCat('act')">🎉 校园活动</button>
+  <button class="cat-btn" data-cat="cmp" onclick="filterCat('cmp')">🏆 竞赛安排</button>
+  <button class="cat-btn" data-cat="fac" onclick="filterCat('fac')">🔧 后勤保障</button>
+  <button class="cat-btn" data-cat="sys" onclick="filterCat('sys')">📋 制度时间线</button>
+</div>
+
+<div id="content"></div>
+
+</div>
+
+<script>
+// ========== DATA ==========
+const DATA = {
+  "2025-11": {
+    label: "2025年11月", days: 30,
+    events: [
+      {d:4, cat:"act", text:"午餐会讨论学院事务", note:"食堂包间/A105"},
+      {d:6, cat:"ops", text:"学院团建预算每组2000元", note:"章校要求"},
+      {d:7, cat:"fac", text:"单人寝室统计", note:"腾讯文档"},
+      {d:9, cat:"act", text:"社团现状梳理", note:"9个社团（11/9-12）"},
+      {d:10, cat:"ops", text:"晚自习教室分配", note:"4学院各一间"},
+      {d:11, cat:"ops", text:"晚自习座位表排定", note:"各院长排自己学院"},
+      {d:13, cat:"ops", text:"项目进度表建立 + 待办整理", note:"企微共享文档"},
+      {d:14, cat:"act", text:"🔥消防演习 12:30", note:"B区食堂外"},
+      {d:14, cat:"act", text:"心理健康讲座 16:30", note:"赵彦瑶老师"},
+      {d:18, cat:"act", text:"秋游方案讨论", note:"迪士尼高票胜出"},
+      {d:20, cat:"ops", text:"培优宣讲会 19:00", note:"D2报告厅 21人"},
+      {d:21, cat:"cmp", text:"STEP选拔名单收集", note:"腾讯文档"},
+      {d:22, cat:"act", text:"🎄双旦活动启动", note:"12/10截止投票"},
+      {d:25, cat:"cmp", text:"STEP考试说明纠正", note:"A2可考"},
+      {d:26, cat:"cmp", text:"EUCLID选拔名单", note:"腾讯文档"},
+      {d:27, cat:"ops", text:"活动课不纳入课时费", note:"章校确认"},
+      {d:27, cat:"act", text:"营地活动培训 12:45", note:"足球场"},
+      {d:28, cat:"ops", text:"周四活动课正式开始", note:"问卷星报名"},
+      {d:28, cat:"act", text:"万圣节素材收集", note:"品宣推文"},
+      {d:28, cat:"act", text:"竞赛营宣讲", note:"IG/AS分群"},
+    ]
+  },
+  "2025-12": {
+    label: "2025年12月", days: 31,
+    events: [
+      {d:1, cat:"ops", text:"周四活动首次执行", note:"Nebula出勤低"},
+      {d:2, cat:"ops", text:"活动调整为室内型", note:"问卷星重报"},
+      {d:5, cat:"cmp", text:"STEP选拔考试", note:"D103 18:30"},
+      {d:9, cat:"act", text:"学生会运动会沟通", note:"朱老师+谭老师"},
+      {d:10, cat:"act", text:"圣诞老人投票截止", note:"18:00"},
+      {d:11, cat:"ops", text:"周四活动人数确认", note:"自习68人"},
+      {d:12, cat:"act", text:"🎄双旦活动", note:""},
+      {d:20, cat:"act", text:"🎄迪士尼秋游", note:"师生参加"},
+      {d:22, cat:"ops", text:"周日晚自习放假", note:"改周日发反馈"},
+      {d:23, cat:"cmp", text:"EUCLID选拔+考历", note:"腾讯文档"},
+      {d:23, cat:"cmp", text:"BBO竞赛通知", note:"4人参加"},
+      {d:26, cat:"act", text:"牛剑申请宣讲 13:00", note:"D2报告厅 9人"},
+      {d:28, cat:"act", text:"周末活动课取消", note:""},
+      {d:30, cat:"fac", text:"清明调休IT调课", note:"1/1→1/4"},
+      {d:31, cat:"ops", text:"双周反馈改企微群发", note:""},
+    ]
+  },
+  "2026-01": {
+    label: "2026年1月", days: 31,
+    events: [
+      {d:7, cat:"ops", text:"入场迟到新规", note:"1月考季起"},
+      {d:9, cat:"ops", text:"6月大考报名开始", note:"CIE/AQA 2/10截止"},
+      {d:10, cat:"ops", text:"IG报考策略讨论", note:"考不到B不考"},
+      {d:10, cat:"ops", text:"双周反馈企微群发", note:"绩效要点"},
+      {d:13, cat:"ops", text:"教师全项会议", note:"D2 12:30"},
+      {d:13, cat:"fac", text:"打印机问题讨论", note:"教师会议"},
+      {d:15, cat:"cmp", text:"BMO R2截止报名", note:"1/22考试"},
+      {d:15, cat:"cmp", text:"AMC获奖确认", note:"25人可做荣誉墙"},
+      {d:16, cat:"ops", text:"班车按楼层分车", note:"A区1-2楼+F楼"},
+      {d:16, cat:"ops", text:"活动课大考暂停", note:"学科组长定"},
+      {d:17, cat:"cmp", text:"BBO考试", note:"居家 10:00"},
+      {d:20, cat:"cmp", text:"IPC&SPC报名截止", note:""},
+      {d:22, cat:"cmp", text:"BMO R2考试", note:"17:00-20:30"},
+      {d:23, cat:"cmp", text:"UKCHO报名截止", note:"1/29考试"},
+      {d:26, cat:"cmp", text:"TMUA&ESAT选拔", note:"D103"},
+      {d:29, cat:"cmp", text:"UKCHO化学竞赛", note:"机考 18:00"},
+      {d:30, cat:"ops", text:"退费退考系统开放", note:"至4/2"},
+    ]
+  },
+  "2026-02": {
+    label: "2026年2月", days: 28,
+    events: [
+      {d:3, cat:"ops", text:"企微群改名任务", note:"章校要求"},
+      {d:3, cat:"act", text:"开学定向活动", note:"新生混合分组"},
+      {d:5, cat:"ops", text:"院长碰头会", note:"校规更新"},
+      {d:6, cat:"fac", text:"寒假宿舍清空", note:"19:00截止"},
+      {d:9, cat:"act", text:"🎒春季开学典礼", note:""},
+      {d:9, cat:"act", text:"新生报到", note:"志愿者老师加班"},
+      {d:9, cat:"ops", text:"期末家长会 19:30", note:"IG/AS"},
+      {d:10, cat:"act", text:"老生开学礼包+院服", note:"腾讯文档"},
+      {d:12, cat:"cmp", text:"AIME II竞赛", note:"13:00-16:00"},
+      {d:14, cat:"ops", text:"CIE一轮报名完成", note:"等官方确认"},
+      {d:25, cat:"act", text:"新老生IG开学", note:"25-26日"},
+      {d:27, cat:"act", text:"补办小型年会", note:"27-28日"},
+    ]
+  },
+  "2026-03": {
+    label: "2026年3月", days: 31,
+    events: [
+      {d:3, cat:"act", text:"春游调研问卷", note:"3/5截止"},
+      {d:5, cat:"cmp", text:"IPC&SPC物理竞赛", note:"17:00"},
+      {d:7, cat:"act", text:"妇女节手作项目", note:"鲜花+下午茶"},
+      {d:8, cat:"act", text:"🌸妇女节活动", note:""},
+      {d:10, cat:"act", text:"午餐会 + 升学沙龙", note:"学生会参与"},
+      {d:15, cat:"ops", text:"3月活动课日历发布", note:""},
+      {d:17, cat:"cmp", text:"PhysicsBowl竞赛", note:"17:00-17:45"},
+      {d:24, cat:"cmp", text:"BIO报名截止", note:"4/4考试"},
+      {d:28, cat:"act", text:"春游（天气延期）", note:""},
+      {d:29, cat:"act", text:"春季运动会", note:"嘉年华+音乐节"},
+      {d:29, cat:"fac", text:"周六全天停电", note:"电力施工"},
+      {d:31, cat:"act", text:"春游", note:"最后一周"},
+      {d:null, cat:"ops", text:"起床时间讨论", note:"推迟15-20min"},
+      {d:null, cat:"fac", text:"拉肚子事件", note:"21人反馈"},
+    ]
+  },
+  "2026-04": {
+    label: "2026年4月", days: 30,
+    events: [
+      {d:1, cat:"cmp", text:"Euclid数学竞赛", note:"9:30-12:00"},
+      {d:3, cat:"fac", text:"快递区包裹清理", note:"各院长转发"},
+      {d:4, cat:"cmp", text:"BIO竞赛", note:"10:30-11:20"},
+      {d:10, cat:"ops", text:"💰调薪体现", note:"院长提前通知"},
+      {d:12, cat:"fac", text:"周六全天停电", note:"学生尽量离校"},
+      {d:13, cat:"cmp", text:"CCC报名截止", note:"4/22考试"},
+      {d:14, cat:"ops", text:"宿舍违纪每周汇总", note:""},
+      {d:15, cat:"ops", text:"劳动节放假通知", note:"5/1-5/4"},
+      {d:16, cat:"act", text:"🏃体育嘉年华/运动会", note:"改期周三"},
+      {d:16, cat:"act", text:"🚒消防演练", note:"5-6辆消防车"},
+      {d:19, cat:"ops", text:"28届升学面谈", note:"扫码"},
+      {d:20, cat:"ops", text:"家校群改名DDL", note:"13:30"},
+      {d:20, cat:"ops", text:"院长碰头会", note:"12:45"},
+      {d:22, cat:"cmp", text:"CCC竞赛", note:"17:00-18:00"},
+      {d:null, cat:"act", text:"教师生日会重启讨论", note:""},
+    ]
+  },
+  "2026-05": {
+    label: "2026年5月（计划中）", days: 31,
+    events: [
+      {d:1, cat:"ops", text:"劳动节放假", note:"5/1-5/4"},
+      {d:5, cat:"ops", text:"6月大考开始", note:"第一场"},
+      {d:24, cat:"cmp", text:"CAT竞赛", note:"10:00-11:00"},
+    ]
+  }
+};
+
+const SYSTEMS = [
+  {time:"2025年11月", title:"加班认定制度", desc:"12:00-13:00会议不算加班；非正常工作时间突发性工作经审批可算"},
+  {time:"2025年11月", title:"请假审批流程", desc:"院长批→抄送学科组长"},
+  {time:"2025年11月", title:"警告权限制度", desc:"所有老师都可以开警告，开了告知导师"},
+  {time:"2025年11月", title:"活动课制度", desc:"不算课时费，纳入年终绩效考核"},
+  {time:"2025年12月", title:"绩效等级制度", desc:"20%A / 40%B / 40%C"},
+  {time:"2025年12月", title:"双周反馈制度调整", desc:"周五晚10点发家长，企微群发（绩效要点）"},
+  {time:"2026年1月", title:"大考迟到新规", desc:"开考前10分钟安检，迟到10分钟内需导师申请+口头警告"},
+  {time:"2026年1月", title:"考试费说明", desc:"包含考试费+考务费+外汇税+DHL+清关+器材费"},
+  {time:"2026年1月", title:"班车制度改革", desc:"按A区楼层分车（1-2楼+E楼1号，3楼+F楼2号）"},
+  {time:"2026年春季", title:"转校区流程", desc:"4月底收集→5月中导师切换→6月初暑期课程选择"},
+  {time:"2026年4月", title:"调薪制度", desc:"4月10日体现，院长提前通知"},
+];
+
+const CAT_NAMES = {ops:"运营制度", act:"校园活动", cmp:"竞赛安排", fac:"后勤保障", sys:"制度时间线"};
+const CAT_CLASSES = {ops:"evt-ops", act:"evt-act", cmp:"evt-cmp", fac:"evt-fac", sys:"evt-sys"};
+const DC_CLASSES = {ops:"dc-ops", act:"dc-act", cmp:"dc-cmp", fac:"dc-fac", sys:"dc-sys"};
+
+let currentCat = 'all';
+
+// ========== RENDER ==========
+function getDayOfWeek(y, m, d) {
+  return new Date(y, m-1, d).getDay();
+}
+
+function renderCalendar(monthKey) {
+  const m = DATA[monthKey];
+  const [y, mo] = monthKey.split('-').map(Number);
+  const firstDay = getDayOfWeek(y, mo, 1);
+  const dayNames = ['日','一','二','三','四','五','六'];
+
+  let html = '<div class="cal-grid">';
+  dayNames.forEach(n => { html += `<div class="day-header">${n}</div>`; });
+
+  // Pad
+  for (let i = 0; i < firstDay; i++) html += '<div class="day-cell empty-cell"></div>';
+
+  for (let d = 1; d <= m.days; d++) {
+    const dow = getDayOfWeek(y, mo, d);
+    const isWeekend = dow === 0 || dow === 6;
+    const evts = m.events.filter(e => e.d === d);
+    const rangeEvts = m.events.filter(e => e.d === null);
+    const hasEvt = evts.length > 0;
+    const cats = [...new Set(evts.map(e => e.cat))];
+    const hidden = (currentCat !== 'all' && currentCat !== 'sys') ? evts.filter(e => e.cat !== currentCat).length === evts.length && evts.length > 0 : false;
+    
+    let classes = 'day-cell';
+    if (isWeekend) classes += ' weekend';
+    if (cats.length === 1) classes += ` cat-${cats[0]} has-event`;
+    else if (cats.length > 1) classes += ' multi-cat has-event';
+    if (hidden) classes += ' empty-cell';
+
+    html += `<div class="${classes}">`;
+    html += `<div class="day-num">${d}</div>`;
+    evts.filter(e => currentCat === 'all' || e.cat === currentCat).forEach(e => {
+      html += `<div class="evt-tag ${CAT_CLASSES[e.cat]}" title="${e.text}">${e.text.length > 5 ? e.text.slice(0,5)+'…' : e.text}</div>`;
+    });
+    html += '</div>';
+  }
+  html += '</div>';
+
+  // Detail cards
+  const filteredEvts = m.events.filter(e => {
+    if (e.d === null) return false;
+    if (currentCat !== 'all' && currentCat !== 'sys' && e.cat !== currentCat) return false;
+    return true;
+  });
+
+  if (filteredEvts.length > 0) {
+    html += '<div class="detail-section"><div class="detail-cards">';
+    filteredEvts.forEach(e => {
+      html += `<div class="detail-card ${DC_CLASSES[e.cat]}">
+        <div class="dc-date">${mo}月${e.d}日</div>
+        <div class="dc-text">${e.text}</div>
+        ${e.note ? `<div class="dc-note">${e.note}</div>` : ''}
+      </div>`;
+    });
+    html += '</div></div>';
+  }
+
+  // Multi-day / no-date items
+  const rangeItems = m.events.filter(e => e.d === null && (currentCat === 'all' || e.cat === currentCat));
+  if (rangeItems.length > 0) {
+    html += '<div style="margin-top:12px">';
+    rangeItems.forEach(e => {
+      html += `<div class="range-item">
+        <div class="range-date">${m.label}</div>
+        <div class="range-body">
+          <div class="rb-title">${e.text}</div>
+          ${e.note ? `<div class="rb-note">${e.note}</div>` : ''}
+        </div>
+        <span class="range-tag" style="background:${getComputedStyle(document.documentElement).getPropertyValue('--'+e.cat+'-border')}">${CAT_NAMES[e.cat]}</span>
+      </div>`;
+    });
+    html += '</div>';
+  }
+
+  return html;
+}
+
+function renderSystemTimeline() {
+  let html = '<div class="month-header">📋 重要运营制度确立时间线 <span class="badge">时间轴</span></div>';
+  html += '<div class="sys-timeline">';
+  SYSTEMS.forEach(s => {
+    html += `<div class="sys-item">
+      <div class="si-time">${s.time}</div>
+      <div class="si-title">${s.title}</div>
+      <div class="si-desc">${s.desc}</div>
+    </div>`;
+  });
+  html += '</div>';
+  return html;
+}
+
+function render() {
+  const content = document.getElementById('content');
+  let html = '';
+
+  if (currentCat === 'sys') {
+    html = renderSystemTimeline();
+  } else if (currentCat === 'all') {
+    Object.keys(DATA).forEach(key => {
+      const m = DATA[key];
+      html += `<div class="month-section"><div class="month-header">${m.label} <span class="badge">${m.events.length}项</span></div>`;
+      html += renderCalendar(key);
+      html += '</div>';
+    });
+    html += renderSystemTimeline();
+  } else {
+    Object.keys(DATA).forEach(key => {
+      const m = DATA[key];
+      const hasCat = m.events.some(e => e.cat === currentCat);
+      if (hasCat) {
+        html += `<div class="month-section"><div class="month-header">${m.label} <span class="badge">${m.events.filter(e=>e.cat===currentCat).length}项</span></div>`;
+        html += renderCalendar(key);
+        html += '</div>';
+      }
+    });
+  }
+
+  content.innerHTML = html;
+}
+
+function filterCat(cat) {
+  currentCat = cat;
+  document.querySelectorAll('.cat-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.cat === cat);
+  });
+  render();
+}
+
+// Init
+render();
+</script>
+</body>
+</html>
